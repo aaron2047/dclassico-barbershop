@@ -101,13 +101,12 @@ export const client = {
   // Shape once populated: { author, rating, text, source: "Google" }.
   reviews: [] as { author: string; rating: number; text: string; source: string }[],
 
-  // Lead capture: Formspree. Aaron has an account but the form endpoint
-  // isn't confirmed yet — log into formspree.io, create/open a form, and
-  // paste its endpoint here (format: "https://formspree.io/f/xxxxxxxx").
-  // Until it's real, submissions will fail with the form's visible error
-  // state rather than silently pretending to succeed.
-  leadFormEndpoint: "https://formspree.io/f/WOOLPH_DEMO_PLACEHOLDER",
-  leadFormDestinationNote: "pending real Formspree form ID from Aaron's account",
+  // Lead capture: Formspree, real endpoint from Aaron's account.
+  // Delivers to whatever email is on that Formspree account — update
+  // the destination in Formspree's own dashboard once D'Classico has
+  // a confirmed email and leads should route to the shop directly.
+  leadFormEndpoint: "https://formspree.io/f/mbggazbn",
+  leadFormDestinationNote: "Aaron's Formspree account — repoint once D'Classico's email is confirmed",
 
   brand: {
     // Pulled close to the shop's actual space: gold fixtures, hex-tile
