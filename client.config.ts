@@ -1,4 +1,9 @@
 // The one file that changes per client demo. Everything else reads from this.
+
+// Plain <img> src values need this prefix manually on GitHub Pages (see
+// next.config.ts — it's empty everywhere else, including local dev).
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const client = {
   slug: "dclassico-barbershop",
   businessType: "Barbershop" as const, // maps to schema.org type in lib/schema.ts
@@ -74,20 +79,20 @@ export const client = {
   // clip exported from one of their Instagram reels — mp4, ideally under
   // 5MB, 1920x1080 or similar, placed in /public/gallery). heroImage is
   // the fallback/poster, used alone until a video file is provided.
-  heroImage: "/gallery/team-hero.jpg",
+  heroImage: `${basePath}/gallery/team-hero.jpg`,
   heroVideo: undefined as string | undefined,
 
   // Real shop photos, pulled from their Instagram by Aaron. The one
   // promotional clip with a baked-in "Book Now" phone/address overlay
   // was left out on purpose — not a clean photo for a grid.
   gallery: [
-    { src: "/gallery/fade-design-01.jpg", alt: "Precision fade with a custom line design" },
-    { src: "/gallery/curly-fade.jpg", alt: "Curly fade finish, barber styling the top" },
-    { src: "/gallery/service-detail-01.jpg", alt: "Barber working a cut under the shop's signature lighting" },
-    { src: "/gallery/neck-fade-design.jpg", alt: "Fade with a detailed neckline design" },
-    { src: "/gallery/geometric-fade.jpg", alt: "Geometric line design cut into a fade" },
-    { src: "/gallery/kids-cut.jpg", alt: "Kids cut with a clean part" },
-    { src: "/gallery/team-closing.jpg", alt: "The full D'Classico team" },
+    { src: `${basePath}/gallery/fade-design-01.jpg`, alt: "Precision fade with a custom line design" },
+    { src: `${basePath}/gallery/curly-fade.jpg`, alt: "Curly fade finish, barber styling the top" },
+    { src: `${basePath}/gallery/service-detail-01.jpg`, alt: "Barber working a cut under the shop's signature lighting" },
+    { src: `${basePath}/gallery/neck-fade-design.jpg`, alt: "Fade with a detailed neckline design" },
+    { src: `${basePath}/gallery/geometric-fade.jpg`, alt: "Geometric line design cut into a fade" },
+    { src: `${basePath}/gallery/kids-cut.jpg`, alt: "Kids cut with a clean part" },
+    { src: `${basePath}/gallery/team-closing.jpg`, alt: "The full D'Classico team" },
   ],
 
   // Reviews: leave empty until there are real Google reviews to pull in —
