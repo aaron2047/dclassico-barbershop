@@ -35,24 +35,36 @@ export const client = {
 
   acceptsWalkIns: false,
 
-  // Prices/durations still placeholders — not visible in their content.
+  // Prices: two figures are sourced (public directory listings for this
+  // shop, cross-checked against Yelp) — those carry a real `price`. The
+  // rest are real service categories from their Booksy menu but with no
+  // sourced number, so `price: null` on purpose — the UI links out to
+  // Booksy for those rather than inventing a figure. Replace the sourced
+  // ones with exact numbers too once you have them from the shop directly.
   services: [
-    { name: "Signature Fade", price: "$35", duration: "45 min" },
-    { name: "Classic Cut", price: "$28", duration: "30 min" },
-    { name: "Beard Trim & Line-Up", price: "$18", duration: "20 min" },
-    { name: "Cut + Beard Combo", price: "$45", duration: "60 min" },
-    { name: "Hot Towel Shave", price: "$30", duration: "30 min" },
-    { name: "Kids Cut (12 & under)", price: "$22", duration: "30 min" },
-  ],
+    { name: "Men's Haircut", price: "From $20", duration: "30 min" },
+    { name: "Line-Up / Trim", price: "From $12", duration: "15 min" },
+    { name: "Beard Trim", price: null, duration: "20 min" },
+    { name: "Full Shave", price: null, duration: "30 min" },
+    { name: "Cut + Beard Combo", price: null, duration: "45 min" },
+    { name: "Kids Haircut", price: null, duration: "30 min" },
+  ] as { name: string; price: string | null; duration: string }[],
+
+  // Set this to the shop's real Booksy service-list URL once you have the
+  // link itself (not just a label) — ServicesMenu links out to it for
+  // exact current pricing on the services with no sourced number above.
+  pricingSourceUrl: "",
 
   barbers: 7, // real count — counted from their own team photo
 
-  // DEMO Cal.com link — not a live booking account yet.
-  // Their current flow is a Booksy link with real friction (reported
-  // directly by Aaron); this demo's whole pitch is replacing that with
-  // an embedded, zero-redirect booking modal. Swap for the real org's
-  // event-type once they sign.
-  calLink: "woolph-demo/dclassico-cut",
+  // REAL Cal.com event, created in Aaron's account: "Premium Haircut &
+  // Style - 30 mins" at cal.com/premium-haircut-style-30-mins-c9gv.
+  // IMPORTANT: this event is still a Draft in Cal.com as of when this was
+  // set — the booking button will not work until it's published. Publish
+  // it in the Cal.com dashboard before presenting this demo live.
+  // Once D'Classico signs, this can move to their own Cal.com account
+  // instead of Aaron's personal one — same pattern, just a new link.
+  calLink: "premium-haircut-style-30-mins-c9gv",
   calNamespace: "cut",
 
   gbpUrl: "", // fill with the real Google Business Profile URL once claimed/verified

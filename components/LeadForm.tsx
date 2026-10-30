@@ -8,8 +8,13 @@ import { client } from "@/client.config";
 // Next.js API route needed — works on a static export / Cloudflare Pages).
 // Get the real endpoint from the Formspree dashboard (New Form, or an
 // existing one) at https://formspree.io/forms — the URL shown there is
-// exactly what goes in client.config.ts as `leadFormEndpoint`. Until
-// it's real, submissions correctly fail into the visible error state
+// exactly what goes in client.config.ts as `leadFormEndpoint`. No client
+// email needed for this: a Formspree form delivers to whatever email is
+// on the Formspree *account* that created it (Aaron's), not an address
+// you configure per-form. D'Classico's own email only matters later, when
+// this form (or Cal.com's notifications) should route to the shop
+// directly instead of to Aaron. Until the endpoint is real, submissions
+// correctly fail into the visible error state
 // below rather than silently pretending to succeed.
 type Status = "idle" | "sending" | "sent" | "error";
 

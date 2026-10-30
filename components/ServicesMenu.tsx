@@ -24,21 +24,37 @@ export default function ServicesMenu() {
                 <p className="text-stone-900 font-medium">{service.name}</p>
                 <p className="text-stone-500 text-sm">{service.duration}</p>
               </div>
-              <p className="text-stone-900 font-medium tabular-nums">
-                {service.price}
-              </p>
+              {service.price ? (
+                <p className="text-stone-900 font-medium tabular-nums">
+                  {service.price}
+                </p>
+              ) : (
+                <p className="text-stone-400 text-sm">See current pricing</p>
+              )}
             </li>
           ))}
         </ul>
 
-        <a
-          href="#book"
-          data-cal-link={client.calLink}
-          data-cal-namespace={client.calNamespace}
-          className="inline-flex items-center gap-2 mt-10 text-sm font-medium text-stone-900 border-b border-stone-900 pb-0.5 hover:text-[var(--brand-accent)] hover:border-[var(--brand-accent)] transition-colors duration-200"
-        >
-          Reserve your chair
-        </a>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-10">
+          <a
+            href="#book"
+            data-cal-link={client.calLink}
+            data-cal-namespace={client.calNamespace}
+            className="inline-flex items-center gap-2 text-sm font-medium text-stone-900 border-b border-stone-900 pb-0.5 hover:text-[var(--brand-accent)] hover:border-[var(--brand-accent)] transition-colors duration-200"
+          >
+            Reserve your chair
+          </a>
+          {client.pricingSourceUrl && (
+            <a
+              href={client.pricingSourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-stone-400 hover:text-stone-600 transition-colors duration-200"
+            >
+              Full current pricing &rarr;
+            </a>
+          )}
+        </div>
       </div>
     </section>
   );
