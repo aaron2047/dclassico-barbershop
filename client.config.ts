@@ -50,6 +50,41 @@ export const client = {
   gbpUrl: "", // fill with the real Google Business Profile URL once claimed/verified
   reviewUrl: "", // direct "leave a review" link, same source
 
+  // Gallery: swap these placeholder photos for the shop's real ones once
+  // Aaron pulls them from the client. Each needs an { src, alt }.
+  gallery: [
+    {
+      src: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80",
+      alt: "Barber giving a precision fade",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1512690459411-b9245aed614b?w=800&q=80",
+      alt: "Barbershop interior, chairs and mirrors",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80",
+      alt: "Close detail of a clean beard line-up",
+    },
+    {
+      src: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
+      alt: "Barber tools laid out on a station",
+    },
+  ],
+
+  // Reviews: leave empty until there are real Google reviews to pull in —
+  // never fabricate testimonials. The Reviews component shows an honest
+  // empty state (with a link to gbpUrl, once set) until this has entries.
+  // Shape once populated: { author, rating, text, source: "Google" }.
+  reviews: [] as { author: string; rating: number; text: string; source: string }[],
+
+  // Lead capture: Web3Forms access key. Free, no account needed beyond
+  // confirming an inbox — generate one at https://web3forms.com (enter an
+  // email, get a key back instantly). Using Aaron's own email as the
+  // placeholder destination until the client's real email is confirmed;
+  // swap the key (not the component) when that's ready.
+  leadFormAccessKey: "WOOLPH_DEMO_PLACEHOLDER_KEY",
+  leadFormDestinationNote: "woolphllc@gmail.com (placeholder, pending client email)",
+
   brand: {
     background: "#1C1815", // espresso charcoal, not cool zinc
     accent: "#8A6A3D", // brass, not amber
