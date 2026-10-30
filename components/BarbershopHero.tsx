@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { Calendar, Scissors } from "lucide-react";
+import { Calendar, Scissors, Phone } from "lucide-react";
 import { getCalApi } from "@calcom/embed-react";
 import { client } from "@/client.config";
 
+// Full-bleed background hero: a real shop photo now, a looping muted
+// video later (set client.heroVideo — no other change needed here).
 export default function BarbershopHero() {
   useEffect(() => {
     (async function () {
@@ -19,66 +21,76 @@ export default function BarbershopHero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-[var(--brand-bg)] text-stone-50 flex items-center overflow-hidden font-sans">
-      {/* Single deliberate accent: one thin brass rule, not a decorative glow field */}
-      <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[var(--brand-accent)]/40 to-transparent hidden md:block" />
+    <section className="relative min-h-screen flex flex-col text-stone-50 font-sans overflow-hidden">
+      {/* Background: video when provided, photo otherwise — same markup either way */}
+      <div className="absolute inset-0">
+        {client.heroVideo ? (
+          <video
+            className="w-full h-full object-cover"
+            src={client.heroVideo}
+            poster={client.heroImage}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        ) : (
+          <img
+            src={client.heroImage}
+            alt={`Inside ${client.name}`}
+            className="w-full h-full object-cover"
+          />
+        )}
+        {/* Single deliberate overlay: darkens bottom for text legibility, nothing decorative */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+      </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-24 w-full grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-        {/* Left: copy */}
-        <div className="lg:col-span-7 space-y-10">
-          <div>
-            <p className="text-sm text-stone-400 mb-3">
-              {client.address.street.split(" ").slice(1).join(" ")},{" "}
-              {client.neighborhood} &middot; appointment-only
-            </p>
-            <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-white leading-[1.08]">
-              {client.name}
-            </h1>
-          </div>
+      {/* Minimal top bar — name + call, transparent over the image */}
+      <div className="relative z-10 flex items-center justify-between px-6 md:px-10 py-6">
+        <span className="text-sm font-medium tracking-tight">
+          {client.name}
+        </span>
+        <a
+          href={`tel:${client.phone.replace(/[^\d+]/g, "")}`}
+          className="inline-flex items-center gap-2 text-sm text-stone-300 hover:text-white transition-colors duration-200"
+        >
+          <Phone className="w-3.5 h-3.5" />
+          {client.phone}
+        </a>
+      </div>
 
-          <p className="text-stone-300 text-lg max-w-lg leading-relaxed">
-            {client.tagline} Every chair is a reserved seat with a barber who
-            knows your cut &mdash; no walk-in gamble, no rushed fifteen
-            minutes.
-          </p>
+      {/* Content pinned lower-left, image carries the top */}
+      <div className="relative z-10 mt-auto px-6 md:px-10 pb-16 md:pb-20 max-w-2xl">
+        <p className="text-sm text-stone-300 mb-4">
+          {client.address.street}, {client.neighborhood} &middot;
+          appointment-only
+        </p>
+        <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-white leading-[1.08] mb-6">
+          {client.name}
+        </h1>
+        <p className="text-stone-200 text-base md:text-lg max-w-lg leading-relaxed mb-10">
+          {client.tagline} Every chair is a reserved seat with a barber who
+          knows your cut &mdash; no walk-in gamble, no rushed fifteen
+          minutes.
+        </p>
 
-          {/* CTA: one primary action, one secondary, no competing motion styles */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              data-cal-link={client.calLink}
-              data-cal-namespace={client.calNamespace}
-              data-cal-config='{"layout":"month_view","theme":"dark"}'
-              className="inline-flex items-center justify-center gap-3 bg-stone-50 text-[var(--brand-bg)] font-medium px-7 py-3.5 rounded-sm hover:bg-white transition-colors duration-200"
-            >
-              <Calendar className="w-4 h-4" />
-              Reserve Your Chair
-            </button>
-            <a
-              href="#services"
-              className="inline-flex items-center justify-center gap-2 border border-stone-700 text-stone-300 px-7 py-3.5 rounded-sm hover:border-stone-500 hover:text-white transition-colors duration-200"
-            >
-              <Scissors className="w-4 h-4" />
-              Services &amp; Pricing
-            </a>
-          </div>
-
-          {/* Trust info as plain fact, not a labeled badge grid */}
-          <p className="text-sm text-stone-500 pt-6 border-t border-stone-800 max-w-md">
-            {client.acceptsWalkIns ? "Walk-ins welcome, or reserve ahead." : "Appointment-only, seven days a week."}{" "}
-            {client.barbers} master barbers, each with their own book &mdash;
-            pick yours when you reserve.
-          </p>
-        </div>
-
-        {/* Right: single photo, no overlay card, no pulse dot */}
-        <div className="lg:col-span-5 hidden lg:block">
-          <div className="relative w-full h-[520px] overflow-hidden rounded-sm border border-stone-800">
-            <img
-              src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80"
-              alt="Barber at work in the shop"
-              className="w-full h-full object-cover grayscale-[20%] contrast-110"
-            />
-          </div>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <button
+            data-cal-link={client.calLink}
+            data-cal-namespace={client.calNamespace}
+            data-cal-config='{"layout":"month_view","theme":"dark"}'
+            className="inline-flex items-center justify-center gap-3 bg-stone-50 text-black font-medium px-7 py-3.5 rounded-sm hover:bg-white transition-colors duration-200"
+          >
+            <Calendar className="w-4 h-4" />
+            Reserve Your Chair
+          </button>
+          <a
+            href="#services"
+            className="inline-flex items-center justify-center gap-2 border border-white/30 text-stone-100 px-7 py-3.5 rounded-sm hover:border-white/60 transition-colors duration-200"
+          >
+            <Scissors className="w-4 h-4" />
+            Services &amp; Pricing
+          </a>
         </div>
       </div>
     </section>

@@ -9,16 +9,20 @@ export const client = {
   city: "Philadelphia",
   state: "PA",
 
-  // Placeholder contact info — swap for the real shop's details once confirmed.
-  phone: "(215) 555-0147",
+  // Real, found via their Instagram (a promo clip with a phone/address
+  // overlay). Confirm against their GBP listing once claimed, but this
+  // is verified against their own posted content, not a guess.
+  phone: "(267) 342-3137",
   address: {
-    street: "123 N 5th St",
+    street: "4947 N 5th St",
     city: "Philadelphia",
     neighborhood: "Olney",
     state: "PA",
     zip: "19120",
   },
 
+  // Hours are still a placeholder — not visible in their Instagram content.
+  // Confirm with the shop before this goes live anywhere public.
   hours: [
     { day: "Monday", open: "9:00 AM", close: "7:00 PM" },
     { day: "Tuesday", open: "9:00 AM", close: "7:00 PM" },
@@ -31,6 +35,7 @@ export const client = {
 
   acceptsWalkIns: false,
 
+  // Prices/durations still placeholders — not visible in their content.
   services: [
     { name: "Signature Fade", price: "$35", duration: "45 min" },
     { name: "Classic Cut", price: "$28", duration: "30 min" },
@@ -40,35 +45,37 @@ export const client = {
     { name: "Kids Cut (12 & under)", price: "$22", duration: "30 min" },
   ],
 
-  barbers: 4,
+  barbers: 7, // real count — counted from their own team photo
 
   // DEMO Cal.com link — not a live booking account yet.
-  // Swap for the real client's org/event-type once they sign.
+  // Their current flow is a Booksy link with real friction (reported
+  // directly by Aaron); this demo's whole pitch is replacing that with
+  // an embedded, zero-redirect booking modal. Swap for the real org's
+  // event-type once they sign.
   calLink: "woolph-demo/dclassico-cut",
   calNamespace: "cut",
 
   gbpUrl: "", // fill with the real Google Business Profile URL once claimed/verified
   reviewUrl: "", // direct "leave a review" link, same source
 
-  // Gallery: swap these placeholder photos for the shop's real ones once
-  // Aaron pulls them from the client. Each needs an { src, alt }.
+  // Hero background. heroVideo takes priority when set (a muted, looping
+  // clip exported from one of their Instagram reels — mp4, ideally under
+  // 5MB, 1920x1080 or similar, placed in /public/gallery). heroImage is
+  // the fallback/poster, used alone until a video file is provided.
+  heroImage: "/gallery/team-hero.jpg",
+  heroVideo: undefined as string | undefined,
+
+  // Real shop photos, pulled from their Instagram by Aaron. The one
+  // promotional clip with a baked-in "Book Now" phone/address overlay
+  // was left out on purpose — not a clean photo for a grid.
   gallery: [
-    {
-      src: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80",
-      alt: "Barber giving a precision fade",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1512690459411-b9245aed614b?w=800&q=80",
-      alt: "Barbershop interior, chairs and mirrors",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80",
-      alt: "Close detail of a clean beard line-up",
-    },
-    {
-      src: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80",
-      alt: "Barber tools laid out on a station",
-    },
+    { src: "/gallery/fade-design-01.jpg", alt: "Precision fade with a custom line design" },
+    { src: "/gallery/curly-fade.jpg", alt: "Curly fade finish, barber styling the top" },
+    { src: "/gallery/service-detail-01.jpg", alt: "Barber working a cut under the shop's signature lighting" },
+    { src: "/gallery/neck-fade-design.jpg", alt: "Fade with a detailed neckline design" },
+    { src: "/gallery/geometric-fade.jpg", alt: "Geometric line design cut into a fade" },
+    { src: "/gallery/kids-cut.jpg", alt: "Kids cut with a clean part" },
+    { src: "/gallery/team-closing.jpg", alt: "The full D'Classico team" },
   ],
 
   // Reviews: leave empty until there are real Google reviews to pull in —
@@ -77,17 +84,19 @@ export const client = {
   // Shape once populated: { author, rating, text, source: "Google" }.
   reviews: [] as { author: string; rating: number; text: string; source: string }[],
 
-  // Lead capture: Web3Forms access key. Free, no account needed beyond
-  // confirming an inbox — generate one at https://web3forms.com (enter an
-  // email, get a key back instantly). Using Aaron's own email as the
-  // placeholder destination until the client's real email is confirmed;
-  // swap the key (not the component) when that's ready.
-  leadFormAccessKey: "WOOLPH_DEMO_PLACEHOLDER_KEY",
-  leadFormDestinationNote: "woolphllc@gmail.com (placeholder, pending client email)",
+  // Lead capture: Formspree. Aaron has an account but the form endpoint
+  // isn't confirmed yet — log into formspree.io, create/open a form, and
+  // paste its endpoint here (format: "https://formspree.io/f/xxxxxxxx").
+  // Until it's real, submissions will fail with the form's visible error
+  // state rather than silently pretending to succeed.
+  leadFormEndpoint: "https://formspree.io/f/WOOLPH_DEMO_PLACEHOLDER",
+  leadFormDestinationNote: "pending real Formspree form ID from Aaron's account",
 
   brand: {
+    // Pulled close to the shop's actual space: gold fixtures, hex-tile
+    // lighting, black marble floor — richer gold than a muted SaaS-brass.
     background: "#1C1815", // espresso charcoal, not cool zinc
-    accent: "#8A6A3D", // brass, not amber
+    accent: "#B8923E", // gold, matched to their real chairs/fixtures
     foreground: "#FAFAF9",
   },
 };

@@ -4,11 +4,13 @@ import { useState, type FormEvent } from "react";
 import { Send } from "lucide-react";
 import { client } from "@/client.config";
 
-// Static-site lead capture: POSTs client-side to Web3Forms (free, no
+// Static-site lead capture: POSTs client-side to Formspree (free, no
 // Next.js API route needed — works on a static export / Cloudflare Pages).
-// Get an access key at https://web3forms.com and set it in
-// client.config.ts as `leadFormAccessKey`. Until then this will fail
-// silently to Web3Forms (invalid key) — swap the key before relying on it.
+// Get the real endpoint from the Formspree dashboard (New Form, or an
+// existing one) at https://formspree.io/forms — the URL shown there is
+// exactly what goes in client.config.ts as `leadFormEndpoint`. Until
+// it's real, submissions correctly fail into the visible error state
+// below rather than silently pretending to succeed.
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function LeadForm() {
@@ -19,16 +21,15 @@ export default function LeadForm() {
     setStatus("sending");
 
     const formData = new FormData(e.currentTarget);
-    formData.append("access_key", client.leadFormAccessKey);
-    formData.append("subject", `New inquiry from ${client.name} site`);
+    formData.set("_subject", `New inquiry from ${client.name} site`);
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(client.leadFormEndpoint, {
         method: "POST",
+        headers: { Accept: "application/json" },
         body: formData,
       });
-      const result = await res.json();
-      setStatus(result.success ? "sent" : "error");
+      setStatus(res.ok ? "sent" : "error");
     } catch {
       setStatus("error");
     }
